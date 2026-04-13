@@ -65,7 +65,12 @@
             loader.grub.enable = false;
           };
 
-          services.getty.autologinUser = "root";
+          users.users.claude = {
+            isNormalUser = true;
+            home = "/home/claude";
+          };
+
+          services.getty.autologinUser = "claude";
 
           # Packages
           nixpkgs = {
@@ -87,7 +92,7 @@
 
           # Login shell launches claude
           programs.bash.interactiveShellInit = ''
-            [ "$(whoami)" = "root" ] || return
+            [ "$(whoami)" = "claude" ] || return
 
             args=()
             if [ -f /mnt/claude-vm-config/claude-args ]; then
